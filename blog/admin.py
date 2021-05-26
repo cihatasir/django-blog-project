@@ -1,6 +1,7 @@
+from blog.models.contact import ContactModel
 from django.contrib import admin
 from blog.models import(CommentModel, TextModel,
-                        CategoryModel
+                        CategoryModel, ContactModel
                         )
 
 
@@ -22,3 +23,11 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CommentModel, CommentAdmin)
+
+
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('email', 'date_created')
+    search_fields = ('email__User',)
+
+
+admin.site.register(ContactModel, ContactAdmin)
