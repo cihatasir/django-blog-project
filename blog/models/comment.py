@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from blog.models import TextModel
+from blog.abstract_models import DateAbstractModel
 
 
-class CommentModel(models.Model):
+class CommentModel(DateAbstractModel):
     comment_author = models.ForeignKey(
         'account.CustomUserModel', on_delete=models.CASCADE, related_name='comment')
 
@@ -11,8 +12,6 @@ class CommentModel(models.Model):
         TextModel, on_delete=models.CASCADE, related_name='textsComments')
 
     comment = models.TextField()
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_edited = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'comment'

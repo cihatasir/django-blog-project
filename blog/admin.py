@@ -8,26 +8,20 @@ from blog.models import(CommentModel, TextModel,
 admin.site.register(CategoryModel)
 
 
+@admin.register(TextModel)
 class TextsAdmin(admin.ModelAdmin):
     list_display = (
-        'title', 'date_created', 'date_edit'
+        'title', 'date_created', 'date_edited'
     )
 
 
-admin.site.register(TextModel, TextsAdmin)
-
-
+@admin.register(CommentModel)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('comment_author', 'date_created', 'date_edited')
     search_fields = ('comment_author__User',)
 
 
-admin.site.register(CommentModel, CommentAdmin)
-
-
+@admin.register(ContactModel)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('email', 'date_created')
     search_fields = ('email__User',)
-
-
-admin.site.register(ContactModel, ContactAdmin)
