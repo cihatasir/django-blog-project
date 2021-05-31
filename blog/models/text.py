@@ -15,7 +15,7 @@ class TextModel(models.Model):
     slug = AutoSlugField(populate_from='title', unique=True)
     categories = models.ManyToManyField(CategoryModel, related_name='text')
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='texts')
+        'account.CustomUserModel', on_delete=models.CASCADE, related_name='texts')
 
     class Meta:
         verbose_name = 'Text'

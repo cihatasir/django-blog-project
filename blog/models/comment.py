@@ -5,7 +5,7 @@ from blog.models import TextModel
 
 class CommentModel(models.Model):
     comment_author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='comment')
+        'account.CustomUserModel', on_delete=models.CASCADE, related_name='comment')
 
     text = models.ForeignKey(
         TextModel, on_delete=models.CASCADE, related_name='textsComments')
