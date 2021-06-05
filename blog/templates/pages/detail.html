@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} {{ text.title }} {% endblock title %}
+
+
+{% block content %}
+
+<div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+        <img src="{{ text.image.url }}" class="img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ text.title }}</h5>
+        <p class="card-text"> {{ text.content|safe }} </p>
+        <p class="card-text"><small class="text-muted">It was shared {{ text.date_created|timesince }} ago.</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h5>Comments</h5>
+
+
+{% for comment in comments %}
+
+<div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-3">
+        {% if comment.comment_author.avatar %}
+        <img src="{{ comment.comment_author.avatar.url }}" style="max-width: 150px; height: auto;" class="" alt="...">
+  
+        {% else %}
+            <img src="{% static 'img/user.png' %}" class=""alt="...">
+        {% endif %}
+      </div>
+      <div class="col-md-9">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% empty %}
+<p>İlk yorum yapan sen ol!</p>
+{% endfor %}
+  
+{% endblock %}
+    
