@@ -3,12 +3,22 @@
         <div class="card-header">
           Menu
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Edit Profile</li>
-          <li class="list-group-item">Change Password</li>
-          <li class="list-group-item">Add New Post</li>
-          <li class="list-group-item">My Posts</li>
-          <li class="list-group-item">Logout</li>
-        </ul>
+    
+    {% if request.user.is_authenticated %}
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Edit Profile</li>
+        <li class="list-group-item">Change Password</li>
+        <li class="list-group-item">Add New Post</li>
+        <li class="list-group-item">
+          <a href=" {% url 'my_texts' %} ">My Posts</a>
+        </li>
+        <li class="list-group-item">Logout</li>
+      </ul>
+    {% else %}
+      Login Formu Gelecek
+    {% endif %}
+      
+
+
     </div>    
 </div>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Anasayfa {% endblock title %}
+{% block title %} {{category_title}} {% endblock title %}
 
 
 {% block content %}
@@ -23,8 +23,6 @@
   </div>
 </div>
 
-{% empty %}
-<p>Hiç Yazı Bulunamadı.</p>
 {% endfor %}
 
 <nav aria-label="Page navigation example">

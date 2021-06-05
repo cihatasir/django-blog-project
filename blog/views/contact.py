@@ -2,4 +2,8 @@ from django.shortcuts import render
 
 
 def contact(request):
-    return render(request, 'pages/contact.html', context={})
+    context = {
+        'sayi': 5
+    }
+
+    return render(request, 'pages/contact.html', context=context)
