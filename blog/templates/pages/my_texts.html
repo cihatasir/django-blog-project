@@ -24,7 +24,12 @@
             <th scope="row">{{ text.id }}</th>
             <td>{{ text.title }}</td>
             <td>{{ text.date_edited }}</td>
-            <td>Güncellenecek</td>
+            <td><p>
+              <a class="btn btn-warning" href="{% url 'update-text' slug=text.slug %}">Edit</a>
+  
+              <a class="btn btn-danger" href="{% url 'delete-text' slug=text.slug %}">Delete</a>
+  
+            </p></td>
         </tr>
 
         {% endfor %}

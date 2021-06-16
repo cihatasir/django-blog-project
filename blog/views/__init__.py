@@ -3,3 +3,7 @@ from .base import base
 from .category import category
 from .my_texts import my_texts
 from .detail import detail
+from .add_text import add_text
+from .update_text import update_text
+from .delete_text import delete_text
+from .delete_comment import delete_comment
