@@ -7,6 +7,7 @@ name = "pypi"
 django = "==3.2"
 django-ckeditor = "*"
 django-crispy-forms = "*"
+django-environ = "*"
 
 [dev-packages]
 autopep8 = "*"

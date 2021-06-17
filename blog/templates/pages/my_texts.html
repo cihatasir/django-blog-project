@@ -18,7 +18,7 @@
        
     <tbody>
 
-        {% for text in texts %} 
+      {% for text in texts %} 
 
         <tr>
             <th scope="row">{{ text.id }}</th>
@@ -26,13 +26,20 @@
             <td>{{ text.date_edited }}</td>
             <td><p>
               <a class="btn btn-warning" href="{% url 'update-text' slug=text.slug %}">Edit</a>
-  
+
               <a class="btn btn-danger" href="{% url 'delete-text' slug=text.slug %}">Delete</a>
-  
+
             </p></td>
         </tr>
+      {% empty %}
+      <div class="alert alert-warning" role="alert">
+        <p>You have not any post</p>
+      </div>
 
-        {% endfor %}
+
+      {% endfor %}
+          
+        
 
     </tbody>
 </table>

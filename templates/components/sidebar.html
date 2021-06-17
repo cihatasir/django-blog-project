@@ -3,23 +3,24 @@
         <div class="card-header">
           Menu
         </div>
-    
-    {% if request.user.is_authenticated %}
+
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Edit Profile</li>
-        <li class="list-group-item">Change Password</li>
+        <li class="list-group-item">
+          <a href="{% url 'profile-edit' %}">Edit Profile</a>
+        </li>
+        <li class="list-group-item">
+          <a href=" {% url 'change-password' %} ">Change Password</a>
+        </li>
         <li class="list-group-item">
           <a href=" {% url 'add-text' %} ">Add New Post</a>
         </li>
         <li class="list-group-item">
           <a href=" {% url 'my_texts' %} ">My Posts</a>
         </li>
-        <li class="list-group-item">Logout</li>
+        <li class="list-group-item">
+          <a href=" {% url 'logout' %} ">Logout</a>
+        </li>
       </ul>
-    {% else %}
-      Login Formu Gelecek
-    {% endif %}
-      
 
 
     </div>    

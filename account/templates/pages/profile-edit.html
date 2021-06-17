@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+    Profile Edit
+{% endblock title %}
+
+
+{% block content %}
+    
+    {% include 'components/message.html' %}
+
+    <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form | crispy}}            
+        <input type="submit" class="btn btn-success mt-3 mb-3" value="Profile Edit" />
+    </form>
+
+    
+
+
+{% endblock content %}
+    
