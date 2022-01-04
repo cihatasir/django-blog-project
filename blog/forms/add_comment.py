@@ -6,3 +6,5 @@ class AddCommentModelForm(forms.ModelForm):
     class Meta:
         model = CommentModel
         fields = ('comment', )
+
+        

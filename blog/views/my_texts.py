@@ -12,3 +12,4 @@ def my_texts(request):
     return render(request, 'pages/my_texts.html', context={
         'texts': paginator.get_page(page),
     })
+
