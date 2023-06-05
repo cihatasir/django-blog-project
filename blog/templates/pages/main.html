@@ -2,12 +2,11 @@
 {% load static %}
 {% load category_list from category_tags %}
 
-{% block title %} Clean Blog - {{category_title}} {% endblock title %}
-
+{% block title %} Clean Blog - Main {% endblock title %}
 
 {% block content %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 p-3" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
   <div class="container px-4 px-lg-5">
       <a class="navbar-brand" href=" {% url 'main' %} ">
         <img src="{% static 'img/my-blog.png' %}" width="155" class=""alt="...">
@@ -64,14 +63,24 @@
       </div>
   </div>
 </nav>
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../../static/img/home-bg.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+              <div class="site-heading">
+                  <h1>Clean Blog</h1>
+                  <span class="subheading">Inspired & Creative</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</header>
 <!-- Main Content-->
-<div class="container px-4 px-lg-5" style="margin-top: 150px">
+<div class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
-
-
           {% for blog in blogs %}
-
           <!-- Post preview-->
           <div class="post-preview">
               <a href=" {% url 'detail' slug=blog.slug %} ">
@@ -90,15 +99,35 @@
           </div>
           <!-- Divider-->
           <hr class="my-4" />
-
           {% endfor %}
 
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end"> 
+              {% if blogs.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{blogs.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+              {% endif %}
+          
+              <li class="page-item"><a class="page-link" href="#">{{blogs.number}}</a></li>
+              {% if blogs.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{blogs.next_page_number}}"> Next </a>
+                </li>
+                
+                <li class="page-item">
+                  <a class="page-link" href="?page={{blogs.paginator.num_pages}}"> Last Page </a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
       </div>
   </div>
 </div>
 
 
 {% endblock %}
-    
-
-

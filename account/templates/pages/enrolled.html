@@ -11,11 +11,54 @@
     
     {% include 'components/message.html' %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form | crispy}}            
-        <input type="submit" class="btn btn-success mt-3 mb-3" value="Register" />
-    </form>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                    <div class="wrap d-md-flex">
+                        <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+                            <div class="text w-100">
+                                <h2>
+                                    There is one last step left for you to join us!
+                                </h2>
+                                <a href="{% url 'login' %}"class="btn btn-white btn-outline-white mt-2">Already have an account?</a>
+                            </div>
+                  </div>
+                        <div class="login-wrap p-4 p-lg-5">
+                      <div class="d-flex">
+                          <div class="w-100">
+                              <h3 class="mb-4">Sign Up</h3>
+                          </div>
+                                <div class="w-100">
+                                    <p class="social-media d-flex justify-content-end">
+                                        <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+                                        <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+                                    </p>
+                                </div>
+                      </div>
+                      <form method="POST">
+                        {% csrf_token %}
+                        {{ form | crispy}}            
+                        <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                    <div class="form-group">
+                    </div>
+                  </form>
+                </div>
+              </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
 
     
 

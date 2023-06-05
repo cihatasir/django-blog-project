@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% load category_list from category_tags %}
 
-{% block title %} Clean Blog - {{category_title}} {% endblock title %}
+{% block title %}
+  Clean Blog - Add Post
+{% endblock title %}
 
 
 {% block content %}
@@ -65,40 +68,20 @@
   </div>
 </nav>
 <!-- Main Content-->
-<div class="container px-4 px-lg-5" style="margin-top: 150px">
-  <div class="row gx-4 gx-lg-5 justify-content-center">
-      <div class="col-md-10 col-lg-8 col-xl-7">
-
-
-          {% for blog in blogs %}
-
-          <!-- Post preview-->
-          <div class="post-preview">
-              <a href=" {% url 'detail' slug=blog.slug %} ">
-                  <h2 class="post-title">
-                    {{ blog.title }}
-                  </h2>
-                  <h3 class="post-subtitle">
-                    {{ blog.content|safe|truncatechars_html:170 }}
-                  </h3>
-              </a>
-              <p class="post-meta">
-                  Posted by
-                  <a href="profile.html">{{ blog.author }}</a>
-                  on {{ blog.date_created }}
-              </p>
-          </div>
-          <!-- Divider-->
-          <hr class="my-4" />
-
-          {% endfor %}
-
-      </div>
+<div class="container px-4 x-lg-5" style="margin-top: 145px;">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+  
+            <form action="{% url 'add-blog' %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form | crispy}}            
+                <input type="submit" class="btn btn-success mt-3 mb-3" value="Add New Post" />
+            </form>
+  
+        </div>
+    </div>
   </div>
-</div>
 
-
-{% endblock %}
+{% endblock content %}
     
-
-

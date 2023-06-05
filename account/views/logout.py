@@ -3,6 +3,6 @@ from django.shortcuts import redirect
 
 def _logout(request):
     logout(request)
-    return redirect('anasayfa')
+    return redirect('main')
 
 

@@ -1,5 +1,4 @@
 from .category import CategoryModel
-from .text import TextModel
+from .blog import BlogModel
 from .comment import CommentModel
 from .contact import ContactModel
-

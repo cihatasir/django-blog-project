@@ -1,0 +1,1 @@
+from .category_tags import category_list

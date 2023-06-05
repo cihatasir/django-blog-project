@@ -1,33 +1,167 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load category_list from category_tags %}
 
 {% load crispy_forms_tags %}
 
-{% block title %} {{ text.title }} {% endblock title %}
+{% block title %} {{ blog.title }} {% endblock title %}
 
 {% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+  <div class="container px-4 px-lg-5">
+      <a class="navbar-brand" href=" {% url 'main' %} ">
+        <img src="{% static 'img/my-blog.png' %}" width="155" class=""alt="...">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto py-4 py-lg-0">
+              <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"href=" {% url 'main' %} ">Home</a></li>
+              <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href=" {% url 'blogs' %} ">Blogs</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Categories
+                </a>
+                <ul class="dropdown-menu">
+                  {% category_list as categories %}
+
+                  {% for category in categories %}     
+                    <li>
+                      <a class="dropdown-item" href=" {% url 'category' categorySlug=category.slug %} ">{{ category.name }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+          </ul>
+          {% if request.user.is_authenticated %}
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href=" {% url 'add-blog' %} ">Add Blog</a></li>
+            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href=" {% url 'my_blogs' %} ">My Blogs</a></li>
+
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4"  href=" {% url 'profile-edit' %} "
+                >Profile</a
+              >
+            </li>
+    
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href=" {% url 'logout' %} ">Logout</a>
+            </li>
+          </ul>
+          {% else %}
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">Login</a>
+            </li>
+            <span style="color: #fff; align-self: center"> | </span>
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'register' %}">Register</a>
+            </li>
+          </ul>
+          {% endif %}
+      </div>
+  </div>
+</nav>
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{blog.image.url }}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>{{ blog.title }}</h1>
+                    <span class="meta">
+                        Posted by
+                        <a href="profile.html">{{ blog.author }}</a>
+                        on {{ blog.date_created }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+              <p>
+                {{ blog.content|safe }}
+              </p>
+
+              <h5>Comments</h5>
+              {% if request.user.is_authenticated %}
+              
+              <form method="POST">
+                {% csrf_token %}
+                {{ add_comment_form|crispy }}
+                <input type="submit" value="Comment" class="btn btn-primary mt-3 mb-3">
+              </form>
+              
+              {% include 'components/message.html' %}
+              
+              {% else %}  
+                <p>Please log in to comment</p>
+              {% endif %}
+                  
+              {% for comment in comments %}
+                <div class="card mb-3 w-100">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      {% if comment.comment_author.avatar %}
+                      <img src="{{ comment.comment_author.avatar.url }}" class="img-fluid rounded-start" alt="...">
+                      {% else %}
+                          <img src="{% static 'img/user.png' %}" class="img-fluid rounded-start"s alt="...">
+                      {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <div class="d-flex w-100 h-auto" style="align-items: center;">
+                          <h5 class="card-title" style="flex: 1;">{{ comment.comment_author.username }}</h5>
+                          {% if request.user == comment.comment_author %}
+                          <a class="btn btn-outline-danger btn-sm" href=" {% url 'delete-comment' id=comment.id %} ">Delete</a>
+                        {% endif %}
+                        </div>
+                        <p class="card-text">{{ comment.comment }}</p>
+                        <p class="card-text"><small class="text-muted">{{comment.date_created}}</small></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              {% empty %}
+              <p>You get first comment!</p>
+              {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</article>
+{% comment %} 
 
 <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-4">
-        <img src="{{ text.image.url }}" class="img" alt="...">
+        <img src="{{ blog.image.url }}" class="img" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{ text.title }}</h5>
-        <p class="card-text"> {{ text.content|safe }} </p>
+        <h5 class="card-title">{{ blog.title }}</h5>
+        <p class="card-text"> {{ blog.content|safe }} </p>
         <p class="card-text">
-          <small class="text-muted">It was shared {{ text.date_created|timesince }} ago.
+          <small class="text-muted">It was shared {{ blog.date_created|timesince }} ago.
         </small>
 
         
-        {% if request.user == text.author %}
+        {% if request.user == blog.author %}
 
         
           <p>
-            <a class="btn btn-warning" href="{% url 'update-text' slug=text.slug %}">Edit</a>
+            <a class="btn btn-warning" href="{% url 'update-blog' slug=blog.slug %}">Edit</a>
 
-            <a class="btn btn-danger" href="{% url 'delete-text' slug=text.slug %}">Delete</a>
+            <a class="btn btn-danger" href="{% url 'delete-blog' slug=blog.slug %}">Delete</a>
           </p>
 
 
@@ -40,59 +174,8 @@
       </div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 
-<h5>Comments</h5>
-
-
-{% if request.user.is_authenticated %}
-
-<form method="POST">
-  {% csrf_token %}
-  {{ add_comment_form|crispy }}
-  <input type="submit" value="Comment" class="btn btn-primary mt-3 mb-3">
-</form>
-
-{% include 'components/message.html' %}
-
-{% else %}  
-  <p>Please log in to comment</p>
-{% endif %}
-
-
-
-
-{% for comment in comments %}
-
-<div class="card mb-3">
-    <div class="row g-0">
-      <div class="col-md-3">
-        {% if comment.comment_author.avatar %}
-        <img src="{{ comment.comment_author.avatar.url }}" style="max-width: 100px;" class="" alt="...">
-  
-        {% else %}
-            <img src="{% static 'img/user.png' %}" class=""alt="...">
-        {% endif %}
-      </div>
-      <div class="col-md-9">
-        <div class="card-body">
-          <h5 class="card-title">{{ comment.comment_author.username }} </h5>
-          <p class="card-text"> {{ comment.comment }} </p>
-          
-          {% if request.user == comment.comment_author or request.user == text.author %}
-            <p>
-              <a class="btn btn-danger" href=" {% url 'delete-comment' id=comment.id %} ">Delete</a>
-            </p>
-          {% endif %}
-            
-        </div>
-      </div>
-    </div>
-  </div>
-
-{% empty %}
-<p>You get first comment!</p>
-{% endfor %}
   
 {% endblock %}
     

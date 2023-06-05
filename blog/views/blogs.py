@@ -3,9 +3,7 @@ from blog.models import BlogModel
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from blog.models.category import CategoryModel
-
-def base(request):
+def blogs(request):
     sorgu = request.GET.get('sorgu')
     blogs = BlogModel.objects.order_by('-id')
 
@@ -18,6 +16,6 @@ def base(request):
     page = request.GET.get('page')
     paginator = Paginator(blogs, 2)
 
-    return render(request, 'pages/main.html', context={
+    return render(request, 'pages/blogs.html', context={
         'blogs': paginator.get_page(page)
     })

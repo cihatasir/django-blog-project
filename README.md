@@ -11,18 +11,23 @@ pip install -r requirements.txt
 
 ## Set Database
 ```
-python manage.py makemigrations
-python manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+## If No Such Table
+```
+python3 manage.py migrate --run-syncdb
 ```
 
 ## Create SuperUser
 ```
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 
 ## Run Server
 ```
-python manage.py runserver
+python3 manage.py runserver
 ```
 
 After all these steps, you can start testing and developing this project.

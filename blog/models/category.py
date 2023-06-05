@@ -7,7 +7,7 @@ class CategoryModel(models.Model):
     slug = AutoSlugField(populate_from='name', unique=True)
 
     class Meta:
-        db_table = 'category'
+        db_table = 'Category'
         verbose_name_plural = 'Categories'
         verbose_name = 'Category'
 
